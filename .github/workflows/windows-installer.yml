@@ -2,6 +2,8 @@ name: Build Windows installer
 
 on:
   push:
+    branches:
+      - main
     tags:
       - 'v*'
   workflow_dispatch:
@@ -15,19 +17,31 @@ jobs:
     steps:
       - name: Check out source
         uses: actions/checkout@v4
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: npm
+
       - name: Install dependencies
         run: npm install
+
       - name: Build Windows installer
         run: npm run dist:win
-      - name: Publish installer to release
+
+      - name: Upload installer as workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Learnify-Windows-Installer
+          path: dist/*.exe
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Attach installer to GitHub release
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ github.ref_name }}
           name: Learnify ${{ github.ref_name }}
           generate_release_notes: true
           make_latest: true
