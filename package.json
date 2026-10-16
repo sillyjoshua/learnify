@@ -1,13 +1,13 @@
 {
   "name": "learnify",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A free coding-learning app",
   "main": "electron/main.cjs",
   "author": "Learnify contributors",
   "license": "MIT",
   "scripts": {
     "start": "electron .",
-    "dist:win": "electron-builder --win nsis --x64"
+    "dist:win": "electron-builder --win nsis --x64 --publish never"
   },
   "devDependencies": {
     "electron": "^34.3.0",
