@@ -1,42 +1,24 @@
 {
   "name": "learnify",
-  "version": "1.0.0",
-  "private": true,
-  "description": "Learnify desktop app — free coding lessons, XP, leaderboards and interactive practice.",
-  "main": "src/desktop-main.js",
+  "version": "0.2.0",
+  "description": "A free coding-learning app",
+  "main": "electron/main.cjs",
+  "author": "Learnify contributors",
+  "license": "MIT",
   "scripts": {
-    "start": "node src/server.js",
-    "dev": "node --watch src/server.js",
-    "desktop": "npm run desktop:prepare && electron .",
-    "desktop:dir": "electron-builder --dir",
-    "desktop:win": "electron-builder --win nsis",
-    "desktop:linux": "electron-builder --linux AppImage deb",
-    "desktop:mac": "electron-builder --mac dmg",
-    "desktop:prepare": "electron-rebuild -f -w better-sqlite3"
-  },
-  "engines": { "node": ">=20" },
-  "dependencies": {
-    "better-sqlite3": "^11.8.1",
-    "express": "^4.21.2",
-    "helmet": "^8.0.0",
-    "express-rate-limit": "^7.5.0",
-    "dotenv": "^16.4.7"
+    "start": "electron .",
+    "dist:win": "electron-builder --win nsis --x64"
   },
   "devDependencies": {
-    "electron": "^35.1.5",
-    "electron-builder": "^26.0.12",
-    "@electron/rebuild": "^3.7.2"
+    "electron": "^34.3.0",
+    "electron-builder": "^25.1.8"
   },
   "build": {
-    "appId": "site.learnify.desktop",
+    "appId": "app.learnify.desktop",
     "productName": "Learnify",
-    "asar": true,
-    "files": ["src/**/*", "public/**/*", "data/.gitkeep", "package.json", "LICENSE", "README.md", "!.env", "!data/*.db"],
-    "directories": { "output": "release" },
-    "npmRebuild": true,
-    "win": { "target": [{ "target": "nsis", "arch": ["x64"] }] },
-    "nsis": { "oneClick": false, "allowToChangeInstallationDirectory": true, "createDesktopShortcut": true, "createStartMenuShortcut": true },
-    "linux": { "target": ["AppImage", "deb"], "category": "Education" },
-    "mac": { "target": ["dmg"], "category": "public.app-category.education" }
+    "directories": { "output": "dist" },
+    "files": ["index.html", "electron/**/*", "package.json"],
+    "win": { "target": [{ "target": "nsis", "arch": ["x64"] }], "artifactName": "Learnify-Setup-${version}.${ext}" },
+    "nsis": { "oneClick": false, "allowToChangeInstallationDirectory": true, "createDesktopShortcut": true, "createStartMenuShortcut": true }
   }
 }

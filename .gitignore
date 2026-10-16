@@ -1,7 +1,5 @@
 node_modules/
-.env
-*.db
-*.db-shm
-*.db-wal
-.DS_Store
+dist/
 release/
+.DS_Store
+Thumbs.db
